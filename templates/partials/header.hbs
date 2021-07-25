@@ -1,0 +1,26 @@
+<header class="main-header">
+    <nav class="main-header__nav">
+        <ul class="main-header__item-list">
+            <li class="main-header__item"><a class="" href="/">Shop</a></li>
+            <li class="main-header__item"><a class="" href="/products">Products</a></li>
+            {{#if isLoggedIn}}
+            <li class="main-header__item"><a class="" href="/cart">Cart</a></li>
+            <li class="main-header__item"><a class="" href="/orders">Orders</a></li>
+            <li class="main-header__item"><a class="" href="/admin/products">Admin Product</a></li>
+            <li class="main-header__item"><a class="" href="/admin/add-product">Add Product</a></li>
+            {{/if}}
+        </ul>
+        <ul class="main-header__item-list">
+            {{#if isLoggedIn}}
+            <li class="main-header__item">
+                <form action="/logout" method="POST">
+                <button type="submit">Logout</button>
+                </form>
+            </li>
+            {{else}}
+            <li class="main-header__item"><a class="" href="/login">Login</a></li>
+            <li class="main-header__item"><a class="" href="/signup">Sign Up</a></li>
+            {{/if}}
+        </ul>
+    </nav>
+</header>

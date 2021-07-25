@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/product.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/cart.css">
+    <title>{{pageTitle}}</title>
+</head>
+<body>
+    {{>header}}
+    {{!-- {{#if empty}}
+        <h1> Cart is Empty </h1>
+    {{else}}
+    <h2> you got something </h2>
+    <ol>
+        {{#each cartData}}
+            <li>{{this.product.title}} ({{this.quantity}})</li>
+            <li>{{this.product.id}}</li>
+            <li>{{this.product.price}}</li>
+            <form action="/cart-delete-item" method="POST">
+                <input type="hidden" name="productId" value="{{this.product.id}}">
+                <input type="hidden" name="price" value="{{this.product.price}}">
+                <button class="btn" type="submit">Remove</button>
+            </form>
+        {{/each}}
+    </ol>
+    {{/if}} --}}
+<main>
+    {{#if empty}}
+    <h1> Cart is Empty </h1>
+    {{else}}
+        <ul class="cart__item-list">
+            {{#each cartData}}
+                <li class="cart__item">
+                    <h1>{{this.product.title}}</h1>
+                    <h2>{{this.quantity}}</h2>
+                    <h2>{{this.product.price}}$</h2>
+                    <form action="/cart-delete-item" method="POST">
+                        <input type="hidden" name="productId" value="{{this.product.id}}">
+                        <input type="hidden" name="price" value="{{this.product.price}}">
+                        <button class="btn danger" type="submit">Delete</button>
+                    </form>
+                </li>
+            {{/each}}
+        </ul>
+        {{/if}}
+        <hr>
+        <div class="centered">
+            <form action="/create-order" method="POST">
+                <button type="submit" class="btn">Order Now!</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

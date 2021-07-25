@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/product.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/orders.css">
+    <title>{{pageTitle}}</title>
+</head>
+<body>
+{{>header}}
+    {{!-- {{#if empty}}
+    <h1>You dont have any order yet!</h1>
+    {{else}}
+    <h1>ohh! you got something</h1>
+    {{/if}} --}}
+<main>
+{{#if empty}}
+<h1>You dont have any order yet!</h1>
+{{else}}
+    <ul class="orders">
+        {{#each orders}}
+            <li class="orders__item">
+                <h1>{{this._id }}</h1>
+                <ul class="orders__products">
+                    {{#each this.products}}
+                    <li class="orders__products-item">{{this.product.title}} ({{this.quantity }})</li>
+                    {{/each}}
+                </ul>
+            </li>
+        {{/each}}
+    </ul>
+{{/if}}
+</main>
+</body>
+</html>
