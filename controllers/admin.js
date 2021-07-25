@@ -14,10 +14,12 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const title = req.body.title
-  const imageUrl = req.body.imageUrl
+  const image = req.file
   const description = req.body.description
   const price = req.body.price
   const userId = req.user._id
+  // console.log(image)
+  const imageUrl = image.path
   const product = new Product({title,imageUrl,description,price,userId})
   product.save()
   .then(r=>{
@@ -64,12 +66,13 @@ exports.getEditProduct = (req, res, next) => {
 exports.postEditProduct = (req,res,next) =>{
   const id = req.body.productId
   const title = req.body.title
-  const imageUrl = req.body.imageUrl
+  const image = req.file
   const description = req.body.description
   const price = req.body.price
   Product.findById(id).then(product=>{
-    product.title = title,
-    product.imageUrl = imageUrl,
+    let url = image ? image.path : product.imageUrl
+    product.title = title;
+    product.imageUrl = url
     product.description = description,
     product.price = price
     return product.save()

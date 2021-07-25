@@ -1,10 +1,12 @@
 const path = require('path');
 const hbs = require('hbs')
-require('./util/mongoose')
+// require('./util/mongoose')
+require('dotenv').config()
 const express = require('express');
 const session = require('express-session')
 const bodyParser = require('body-parser');
 const MongoDBStore = require('connect-mongodb-session')(session)
+const mongoose = require('mongoose') 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
@@ -13,7 +15,7 @@ const User = require('./models/user');
 const flash= require('connect-flash')
 const multer = require('multer')
 const store = new MongoDBStore({
-    uri:'mongodb://127.0.0.1:27017/eshop',
+    uri:process.env.LOCAL_DATA_BASE,
     collection:'sessions'
 })
 const viewPath = path.join(__dirname,'templates','views')
@@ -30,18 +32,36 @@ app.use((req,res,next)=>{
         next()
     }).catch(err=>console.log(err))
 })
+const fileStorage = multer.diskStorage({
+    destination:(req,file,cb)=>{
+        cb(null,'images')
+    },
+    filename:(req,file,cb)=>{
+        cb(null,new Date().toISOString().replace(/:/g, '-')+ file.originalname)
+    }
+})
 app.use(flash())
 app.set('view engine', 'hbs');
 app.set('views', viewPath);
-app.use(express.static(publicDir));
+app.use(express.static(publicDir))
+app.use('/images',express.static(path.join(__dirname,'images')))
 hbs.registerPartials(partialPath)
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(multer().single('image'))
+app.use(multer({storage:fileStorage}).single('image'))
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes)
 app.use(errorController.get404);
 const port = process.env.PORT || 3000
-app.listen(port,()=>{
-    console.log('Server is running')
-});
+
+mongoose.connect(process.env.DATABASE,{
+    useNewUrlParser:true,
+    useCreateIndex : true,
+    useUnifiedTopology:true
+}).then(result=>{
+    app.listen(port,()=>{
+        console.log('Server is running')
+    })
+}).catch(e=>{
+    console.log('Something went Wrong',e)
+})
