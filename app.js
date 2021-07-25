@@ -11,7 +11,7 @@ const authRoutes = require('./routes/auth');
 const errorController = require('./controllers/error');
 const User = require('./models/user');
 const flash= require('connect-flash')
-// const multer = require('multer')
+const multer = require('multer')
 const store = new MongoDBStore({
     uri:'mongodb://127.0.0.1:27017/eshop',
     collection:'sessions'
