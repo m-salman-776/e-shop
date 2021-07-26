@@ -14,7 +14,7 @@ const User = require('./models/user');
 const flash= require('connect-flash')
 const multer = require('multer')
 const store = new MongoDBStore({
-    uri:process.env.LOCAL_DATA_BASE,
+    uri:process.env.DATABASE,
     collection:'sessions'
 })
 const viewPath = path.join(__dirname,'templates','views')
