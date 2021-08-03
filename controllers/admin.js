@@ -12,21 +12,23 @@ exports.getAddProduct = (req, res, next) => {
   });
 }; 
 
-exports.postAddProduct = (req, res, next) => {
+exports.postAddProduct = async (req, res, next) => {
   const title = req.body.title
   const image = req.file
   const description = req.body.description
   const price = req.body.price
   const userId = req.user._id
-  // console.log(image)
   const imageUrl = image.path
   const product = new Product({title,imageUrl,description,price,userId})
-  product.save()
-  .then(r=>{
+  try{
+    await product.save()
     res.redirect('/admin/products')
-  }).catch(e=>{
-    console.log(e)
-  });
+  }catch(e){
+    res.render('admin/error-page',{
+      pageTitle:'Image Upload Store',
+      error: e ? e : 'If you not seeing any error'
+    })
+  }
 };
 exports.getProducts = (req,res) =>{
     Product.find()
