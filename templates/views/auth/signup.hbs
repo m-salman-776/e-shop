@@ -18,7 +18,8 @@
      {{#if errorMessage}}
     <div class="user-message user-message--error">{{errorMessage}}</div>
     {{/if}}
-    <form class="login-form" action="/signup" method="POST">
+    <form class="login-form box-card" action="/signup" method="POST">
+    <h1>Sign Up</h1>
         <div class="form-control">
             <label for="email">E-mail</label>
             <input type="email" name="email" id="email">
@@ -31,7 +32,10 @@
             <label for="password">Confirm Password</label>
             <input type="password" name="confirmedPassword" id="password">
         </div>
+        <center>
         <button class="btn" type="submit">Sign Up</button>
+        <a href="/login" style="color:blue;font-size:10px">Already Have an Account</a>
+        </center>
     </form>
 </main>
 </body>

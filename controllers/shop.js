@@ -98,12 +98,12 @@ exports.postOrder = (req,res) =>{
     console.log(e)
   })
 }
-// exports.getCheckout = (req,res) =>{
-//   res.render('shop/orders',{
-//       pageTitle:'Your Cart',
-//       path:'/cart'
-//   })
-// }
+exports.getIndex = (req,res) =>{
+  res.render('admin/headerr',{
+      pageTitle:'Your Cart',
+      path:'/cart'
+  })
+}
 
 exports.postCartDeleteItem = (req,res) =>{
   const id = req.body.productId

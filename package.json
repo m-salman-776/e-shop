@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
     "start-server": "nodemon app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js -e js,hbs"
   },
   "author": "Salman",
   "license": "ISC",

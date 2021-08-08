@@ -34,10 +34,12 @@ form {
 .main-header {
   width: 100%;
   height: 3.5rem;
-  background-color: #00695c;
+  background-color: #f9f9fa;
   padding: 0 1.5rem;
   display: flex;
   align-items: center;
+  z-index:222;
+  box-shadow:2px;
 }
 
 .main-header__nav {
@@ -66,7 +68,7 @@ form {
   background: transparent;
   border: none;
   text-decoration: none;
-  color: white;
+  color: black;
   cursor: pointer;
 }
 
@@ -75,7 +77,7 @@ form {
 .main-header__item a.active,
 .main-header__item button:hover,
 .main-header__item button:active {
-  color: #ffeb3b;
+  color: gray;
 }
 
 .mobile-nav {
