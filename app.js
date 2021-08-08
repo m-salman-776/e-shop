@@ -47,6 +47,12 @@ app.use('/images',express.static(path.join(__dirname,'images')))
 hbs.registerPartials(partialPath)
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(multer({storage:fileStorage}).single('image'))
+app.use((req,res,next)=>{
+    res.locals.shop = false,
+    res.locals.products=false,
+    res.locals.cart = false
+    next()
+})
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes)

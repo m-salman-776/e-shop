@@ -6,10 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/product.css">
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/forms.css">
     <title>{{pageTitle}}</title>
 </head>
 <body>
     {{>header}}
-    form index pageTitle
+    <main>
+    <div class="grid">
+        {{#each products}}
+        <article class="card product-item">
+            <header class="card__header">
+                <h1 class="product__title">{{this.title}}</h1>
+            </header>
+            <div class="card__image">
+                <img src="/{{this.imageUrl}}" alt="A Book">
+            </div>
+            <div class="card__content">
+                <h2 class="product__price">{{this.price}}</h2>
+                <p class="product__description">{{this.description}}</div>
+            <div class="card__actions">
+                <a href="/products/{{this.id}}" class="btn">Details</a>
+                {{#if this.isLoggedIn}}
+                <form action="/cart" method="POST">
+                    <input type="hidden" name="productId" value="{{this.id}}">
+                    <button class="btn">Add to Cart</button>
+                </form>
+                {{/if}}
+            </div>
+        </article>
+        {{/each}}
+    </div>
+{{>pagination}}
+</main>
 </body>
 </html>
