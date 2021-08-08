@@ -14,7 +14,6 @@
     <main>
     <div class="grid">
         {{#each products}}
-        {{isLoggedIn}}
         <article class="card product-item">
             <header class="card__header">
                 <h1 class="product__title">{{this.title}}</h1>
@@ -27,7 +26,7 @@
                 <p class="product__description">{{this.description}}</div>
             <div class="card__actions">
                 <a href="/products/{{this.id}}" class="btn">Details</a>
-                {{#if isLoggedIn}}
+                {{#if this.isLoggedIn}}
                 <form action="/cart" method="POST">
                     <input type="hidden" name="productId" value="{{this.id}}">
                     <button class="btn">Add to Cart</button>
@@ -37,12 +36,7 @@
         </article>
         {{/each}}
     </div>
+{{>pagination}}
 </main>
 </body>
 </html>
-
-{{!-- <ul class="people_list">
-  {{#each people}}
-    <li>{{this}}</li>
-  {{/each}}
-</ul> --}}

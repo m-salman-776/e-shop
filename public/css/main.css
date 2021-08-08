@@ -249,7 +249,25 @@ form {
   background: rgb(255, 176, 176);
   color: red;
 }
-
+.pagination{
+  margin-top: 2rem;
+  text-align: center;
+}
+.pagination a{
+  color: rgb(111, 173, 170);
+  padding: 0.5rem;
+  border: 1px solid lightseagreen;
+  box-shadow: lightslategray;
+}
+.pagination a:hover,
+.pagination a:active,
+.pagination a.active{
+  background: rgb(45, 204, 117);
+  color: white;
+}
+.pagination a.link.dot{
+  color: #00695c;
+}
 @media (min-width: 768px) {
   .main-header__nav {
     display: flex;

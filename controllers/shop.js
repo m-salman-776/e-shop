@@ -3,17 +3,33 @@ const Cart = require('../models/cart');
 const Order = require('../models/order');
 const product = require('../models/product');
 const order = require('../models/order');
+const page_limit = 1;
 exports.getProducts = async (req, res, next) => {
+    const page = +req.query.page || 1
     try{
-      const products = await Product.find();
+      const count = await Product.countDocuments()
+      let temp_prod = await Product.find().skip((page-1)*page_limit).limit(page_limit)
+      let products = []
+      for(let prod of temp_prod){
+        prod.isLoggedIn = req.session.isLoggedIn
+        products.push(prod)
+      }
       res.render('shop/product-list',{
         products,
         pageTitle:'Shop',
-        isLoggedIn:req.session.isLoggedIn
+        isLoggedIn:req.session.isLoggedIn,
+        page,
+        nextPage : page+1,
+        prevPage : page-1,
+        lastPage :Math.ceil(count/page_limit),
+        printFirst:page !== 1 && page !==2,
+        hasNext : page_limit*page < count,
+        hasPrev : page > 1,
+        printLast : Math.ceil(count/page_limit) !== page+1 && Math.ceil(count/page_limit) !== page
       })
     }
     catch(e){
-      console.log('from product list')
+      console.log('from product list',e)
     }
 };
 exports.getProduct = async (req,res)=>{

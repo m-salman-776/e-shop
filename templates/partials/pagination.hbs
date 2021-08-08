@@ -1,0 +1,17 @@
+    <section class="pagination">
+        {{#if printFirst}}
+        <a href="?page=1">1</a>
+        <span style="color: rgb(65, 71, 69);font-size:large">...</span>
+        {{/if}}
+        {{#if hasPrev }}
+        <a href="?page={{prevPage}}">{{prevPage}}</a>
+        {{/if}}
+        <a href="?page={{page}}" class="active">{{page}}</a>
+        {{#if hasNext}}
+        <a href="?page={{nextPage}}">{{nextPage}}</a>
+        {{/if}}
+        {{#if printLast}}
+        <span style="color: rgb(65, 71, 69);font-size:large">...</span>
+        <a href="?page={{lastPage}}">{{lastPage}}</a>
+        {{/if}}
+    </section>
