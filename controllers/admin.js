@@ -27,7 +27,7 @@ exports.postAddProduct = async (req, res, next) => {
       error: e ? e : 'If you not seeing any error'
     })
   }
-};
+}; 
 exports.getProducts = async (req,res) =>{
   try{
     const products = await Product.find().populate('userId')

@@ -1,5 +1,5 @@
 const Product = require('../models/product');
-const Cart = require('../models/cart');
+// const Cart = require('../models/cart');
 const Order = require('../models/order');
 const product = require('../models/product');
 const order = require('../models/order');
@@ -48,9 +48,9 @@ exports.getProduct = async (req,res)=>{
 }
 exports.getCart = async (req,res) =>{
   try{
-    const user = await req.user.populate('cart.items.productId').execPopulate()
+    const user_data = await req.user.populate('cart.items.productId').execPopulate()
     let cartData = []
-    for(let product of user.cart.items)
+    for(let product of user_data.cart.items)
     cartData.push({
       product:product.productId,
       quantity:product.quantity,
@@ -96,6 +96,7 @@ exports.postOrder = async (req,res) =>{
     const products = user_data.cart.items.map(i=>{
       return {quantity:i.quantity,product:{...i.productId._doc}}
     })
+    if(products.length == 0) return res.redirect('/cart')
     const order = new Order({user,products})
     await order.save()
     req.user.clearCart()
