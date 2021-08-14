@@ -59,7 +59,7 @@ app.use(authRoutes)
 app.use(errorController.get404);
 const port = process.env.PORT || 3000
 
-mongoose.connect(process.env.DATABASE,{
+mongoose.connect(process.env.LOCAL_DATABASE,{
     useNewUrlParser:true,
     useCreateIndex : true,
     useUnifiedTopology:true
