@@ -1,30 +1,36 @@
-# e-shop
-
+# e-shop [https://salman-e-shop.herokuapp.com/](https://salman-e-shop.herokuapp.com/)
+images used will not be render as no storage location is configured <br>
 **Used Tech Stack** 
 * Express
 * Mongoose
 * HTML/CSS
 * JavaScrippt
 * HBS Templating Engine
+* bcrypt for password encryption/decryption
 
 **Highlights**
 * MVC Architecture
-* User Authentication / Authorisation based Access
+* Authentication / Authorisation based Access
 * Password Reset through verification Email
-* Add User
-* Add Product
-* Remove Products
+* Multer image upload
+* Sessions
+* Async/Await call
 
 **Mongoose Model**
 - User
 - Products
 - Orders
 
+
+**Database**
+- MongoDB Free Tier for text based
+- Storage Location for Image yet to be configured
+
 ## User Model Design
 
 | User Model | 
 | --- |
-| ***Name*** : Required <br/> ***Email*** : Required ,Validators <br> ***Password*** : Required,Encryption,Length Constraints <br> ***Cart*** : Ref->Product / Array of Object|
+| ***Name*** : Required <br/> ***Email*** : Required ,Validators <br> ***Password*** : Required,Encryption,Length Constraints <br> ***resetPasswordToken*** : User password reset <br> ***Cart*** : Ref->Product / Array of Object|
 | addToCart(Product) <br> deleteFromCart(Product) <br> clearCart() <br> FindUser()|
 
 ## Product Model Design
