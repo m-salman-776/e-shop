@@ -103,7 +103,7 @@ exports.postResetPassword = async (req,res,next) =>{
     console.log(e)
   }
 }
-
+ 
 exports.changepassword = (req,res,next)=>{
   let message = req.flash('error')
   message = message.length > 0 ? message[0] : null
@@ -120,7 +120,7 @@ exports.setPassword = async (req,res,next)=>{
   try{
     const user = await User.findOne({'resetPasswordToken.token':token})
     if(!user || Date.now() > user.resetPasswordToken.expirationTime){
-      req.flash('error','Invalid token or User')
+      req.flash('error','Invalid User or token')
       return res.redirect('/reset')
     }
     user.password = password

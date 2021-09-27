@@ -151,7 +151,3 @@ exports.postCartDeleteItem = (req,res) =>{
     console.log(e)
   })
 }
-
-// exports.getView = async(req,res,next)=>{
-//   res.render('shop/view-details');
-// }

@@ -14,7 +14,7 @@ const User = require('./models/user');
 const flash= require('connect-flash')
 const multer = require('multer')
 const store = new MongoDBStore({
-    uri:process.env.LOCAL_DATABASE,
+    uri:process.env.DATABASE,
     collection:'sessions'
 })
 const viewPath = path.join(__dirname,'templates','views')
@@ -60,7 +60,7 @@ app.use(authRoutes)
 app.use(errorController.get404);
 const port = process.env.PORT || 3000
 
-mongoose.connect(process.env.LOCAL_DATABASE,{
+mongoose.connect(process.env.DATABASE,{
     useNewUrlParser:true,
     useCreateIndex : true,
     useUnifiedTopology:true
