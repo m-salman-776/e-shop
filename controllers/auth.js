@@ -133,6 +133,8 @@ exports.setPassword = async (req,res,next)=>{
   }
 }
 exports.getProfile = async(req,res,next)=>{
+  let message = req.flash('error')
+  message = message.length > 0 ? message[0] : null
   const user = req.session.user;
   const img = 'https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg'
   res.render('auth/profile',{
@@ -142,11 +144,19 @@ exports.getProfile = async(req,res,next)=>{
     pageTitle:'Profile',
     profile : true,
     isLoggedIn:req.session.isLoggedIn,
+    errorMessage:message
   })
 }
 exports.postUpdateProfile = async (req,res,next)=>{
-  user.name = req.body.name;
-  req.session.user = user;
-  await user.save();
-  res.redirect('/profile');
+  try{
+    let user = req.user;
+    user.name = req.body.name;
+    req.session.user = user;
+    await user.save();
+    res.redirect('/profile');
+  }catch(e){
+    req.flash('error','Some thing went wrong')
+    console.log(e);
+    res.redirect('/profile');
+  }
 }

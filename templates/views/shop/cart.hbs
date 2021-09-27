@@ -38,19 +38,20 @@
                     <h1>{{this.product.title}}</h1>
                     <h2>{{this.quantity}}</h2>
                     <h2>{{this.product.price}}$</h2>
-                    <form action="/cart-delete-item" method="POST">
+                    {{!-- <form action="/cart-delete-item" method="POST"> --}}
+                    <form action="/cart-delete-item" method="POST"></form>
                         <input type="hidden" name="productId" value="{{this.product.id}}">
                         <input type="hidden" name="price" value="{{this.product.price}}">
-                        <button class="btn danger" type="submit">Delete</button>
+                        <button class="btn danger" type="submit" disabled >Delete</button>
                     </form>
-                </li>
+                </li> 
             {{/each}}
         </ul>
         {{/if}}
         <hr>
         <div class="centered">
             <form action="/create-order" method="POST">
-                <button type="submit" class="btn">Order Now!</button>
+                <button type="submit" class="btn" disabled>Order Now!</button>
             </form>
         </div>
     </main>

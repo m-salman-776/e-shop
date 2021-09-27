@@ -138,16 +138,28 @@ exports.getIndex = async (req,res) =>{
     console.log('from index list',e)
   }
 }
-
-exports.postCartDeleteItem = (req,res) =>{
+ 
+exports.postCartDeleteItem = async(req,res) =>{
   const id = req.body.productId
-  Product.findById(id)
-  .then(product=>{
-    req.user.deleteFromCart(product)
-    .then(()=>{
-      res.redirect('/cart')
-    })
-  }).catch(e=>{
-    console.log(e)
-  })
+  try{
+    const product = await Product.findById(id);
+    if(!product){
+      console.log('Issue in deletion')
+      return
+    }
+    await req.user.deleteFromCart(product)
+    res.redirect('/cart');
+  }catch(e){
+    console.log(e);
+  }
 }
+//   Product.findById(id)
+//   .then(product=>{
+//     req.user.deleteFromCart(product)
+//     .then(()=>{
+//       res.redirect('/cart')
+//     })
+//   }).catch(e=>{
+//     console.log(e)
+//   })
+// }
