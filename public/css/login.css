@@ -1,0 +1,32 @@
+body {
+    background: #8f9faf;
+    background: linear-gradient(to right, #a4bad8, #7ea2bb);
+  }
+  
+  .btn-login {
+    font-size: 0.9rem;
+    letter-spacing: 0.05rem;
+    padding: 0.75rem 1rem;
+  }
+  
+  .login-btn-google {
+    color: white !important;
+    background-color: #ea4335;
+  }
+  
+  .login-btn-facebook {
+    color: white !important;
+    background-color: #3b5998;
+  }
+
+  /* .facebook {
+    background-color: #3b5998;
+    color: #fff;
+    font-size: 18px;
+    padding-top: 5px;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    cursor: pointer
+} */
+  

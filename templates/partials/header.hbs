@@ -1,25 +1,43 @@
-<header class="main-header">
-    <nav class="main-header__nav">
-        <ul class="main-header__item-list">
-            <li class="main-header__item "><a {{#if index}} class="active"{{/if}} href="/" >Shop</a></li>
-            <li class="main-header__item"><a {{#if shop}} class="active"{{/if}} href="/products">Products</a></li>
-            {{#if isLoggedIn}}
-            <li class="main-header__item "><a {{#if cart}} class="active"{{/if}} href="/cart">Cart</a></li>
-            <li class="main-header__item "><a {{#if orders}} class="active"{{/if}} href="/orders">Orders</a></li>
-            <li class="main-header__item "><a {{#if adminProducts}} class="active"{{/if}} href="/admin/products">Admin Product</a></li>
-            <li class="main-header__item "><a {{#if addProduct}} class="active"{{/if}} href="/admin/add-product">Add Product</a></li>
-            {{/if}}
-        </ul>
-        <ul class="main-header__item-list">
-            {{#if isLoggedIn}}
-            <li class="main-header__item">
-                <form action="/logout" method="POST">
-                <button type="submit">Logout</button>
+<script>
+import throttle from "https://cdn.skypack.dev/lodash@4/throttle";
+function onScroll() {
+  if (window.pageYOffset) {
+    $$header.classList.add("is-active");
+  } else {
+    $$header.classList.remove("is-active");
+  }
+}
+const $$header = document.querySelector(".js-header");
+window.addEventListener("scroll", throttle(onScroll, 300));
+</script>
+<link rel="stylesheet" href="/css/header.css">
+<header class="header sticky sticky--top js-header" style="background-color: lightblue;z-index: 13333;text-wrap : wrap;">
+  <div class="grid">
+
+    <nav class="navigation">
+      <ul class="navigation__list navigation__list--inline">
+        {{!-- <li class="navigation__item"><a href="#" class="navigation__link navigation__link--is-active">Home</a></li>
+        <li class="navigation__item"><a href="#" class="navigation__link">About Us</a></li> --}}
+        <li class="navigation__item"><a {{#if index}} class="navigation__link navigation__link--is-active" {{else}} class="navigation__link" {{/if}} href="/" >Shop</a></li>
+        <li class="navigation__item"><a {{#if shop}} class="navigation__link navigation__link--is-active" {{else}} class="navigation__link" {{/if}} href="/products">{{#if product_details}}Product Details {{else}} Products {{/if}}</a></li>
+        {{#if isLoggedIn}}
+            <li class="dropdown navigation__item">
+              <a {{#if profile}} class="navigation__link navigation__link--is-active" {{else}} class="navigation__link" {{/if}} href="/profile">{{display_name}}</a>
+              <div class="dropdown-content">
+                <a href="/cart">Cart</a>
+                <a href="/orders">Orders</a>
+                <a href="/admin/add-product">Add Products</a>
+                <a href="/admin/products">Admin Products</a>
+                <a href="/profile">Profile</a>
+                <form action="/logout" method="POST" >
+                  <button type="submit" class="logout-button">Logout</button>
                 </form>
+              </div>
             </li>
-            {{else}}
-            <li class="main-header__item"><a class="" href="/login">Login</a></li>
-            {{/if}}
-        </ul>
+        {{else}}
+            <li class="navigation__item"><a class="navigation__link" href="/login">Login</a></li>
+        {{/if}}
+      </ul>
     </nav>
+  </div>
 </header>

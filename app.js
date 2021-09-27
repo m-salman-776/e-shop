@@ -14,7 +14,7 @@ const User = require('./models/user');
 const flash= require('connect-flash')
 const multer = require('multer')
 const store = new MongoDBStore({
-    uri:process.env.DATABASE,
+    uri:process.env.LOCAL_DATABASE,
     collection:'sessions'
 })
 const viewPath = path.join(__dirname,'templates','views')
@@ -50,7 +50,8 @@ app.use(multer({storage:fileStorage}).single('image'))
 app.use((req,res,next)=>{
     res.locals.shop = false,
     res.locals.products=false,
-    res.locals.cart = false
+    res.locals.cart = false,
+    res.locals.display_name = req.session.user ? req.session.user.name : ''
     next()
 })
 app.use('/admin', adminRoutes);

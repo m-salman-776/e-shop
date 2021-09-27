@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{!-- <link rel="stylesheet" href="/css/product.css"> --}}
+	
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+	<link rel="stylesheet" href="/css/view-details.css">
+	<title>{{pageTitle}}</title>
+</head>
+<body>
+    {{>header}}
+    <div class="container">
+<div class="card">
+	<div class="row">
+		<aside class="col-sm-5 border-right">
+<article class="gallery-wrap"> 
+<div class="img-big-wrap">
+  <div> <a href="#"> <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"></a></div>
+</div> <!-- slider-product.// -->
+<div class="img-small-wrap">
+  <div class="item-gallery"> <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"> </div>
+  <div class="item-gallery">  <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"> </div>
+  <div class="item-gallery"> <img src="https://s9.postimg.org/tupxkvfj3/image.jpg"> </div>
+  <div class="item-gallery"> <img src="https://s9.postimg.org/tupxkvfj3/image.jpg"> </div>
+</div> <!-- slider-nav.// -->
+</article> <!-- gallery-wrap .end// -->
+		</aside>
+		<aside class="col-sm-7">
+<article class="card-body p-5">
+	<h3 class="title mb-3">{{product.title}}</h3>
+
+<p class="price-detail-wrap"> 
+	<span class="price h3 text-warning"> 
+		<span class="currency">US $</span><span class="num">{{product.price}}</span>
+	</span> 
+	{{!-- <span>/per kg</span>  --}}
+</p> <!-- price-detail-wrap .// -->
+<dl class="item-property">
+  <dt>Description</dt>
+  <dd><p>{{product.description}}</p></dd>
+</dl>
+{{!-- <dl class="param param-feature">
+  <dt>Model#</dt>
+  <dd>12345611</dd>
+</dl>  <!-- item-property-hor .// --> --}}
+{{!-- <dl class="param param-feature">
+  <dt>Color</dt>
+  <dd>Black and white</dd>
+</dl>  <!-- item-property-hor .// -->
+<dl class="param param-feature">
+  <dt>Delivery</dt>
+  <dd>Russia, USA, and Europe</dd>
+</dl>  <!-- item-property-hor .// --> --}}
+
+<hr>
+	<div class="row">
+		<div class="col-sm-5">
+			<dl class="param param-inline">
+			  <dt>Quantity: </dt>
+			  <dd>
+			  	<select class="form-control form-control-sm" style="width:70px;">
+			  		<option> 1 </option>
+			  		<option> 2 </option>
+			  		<option> 3 </option>
+			  	</select>
+			  </dd>
+			</dl>  <!-- item-property .// -->
+		</div> <!-- col.// -->
+		{{!-- <div class="col-sm-7">
+			<dl class="param param-inline">
+				  <dt>Size: </dt>
+				  <dd>
+				  	<label class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+					  <span class="form-check-label">SM</span>
+					</label>
+					<label class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+					  <span class="form-check-label">MD</span>
+					</label>
+					<label class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+					  <span class="form-check-label">XXL</span>
+					</label>
+				  </dd>
+			</dl>  <!-- item-property .// -->
+		</div> <!-- col.// --> --}}
+	</div> <!-- row.// -->
+	<hr>
+	{{#if isLoggedIn}}
+        <form action="/cart" method="POST" style="width: max-content;">
+        <input type="hidden" name="productId",id = "productId" value="{{product.id}}">
+        <button class="btn btn-lg btn-primary">Add to Cart</button>
+        </form>
+    {{/if}}
+	{{!-- <a href="#" class="btn btn-lg btn-primary text-uppercase"> Buy now </a>
+	<a href="#" class="btn btn-lg btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i> Add to cart </a> --}}
+</article> <!-- card-body.// -->
+		</aside> <!-- col.// -->
+	</div> <!-- row.// -->
+</div> <!-- card.// -->
+
+
+</div>
+
+</body>
+</html>

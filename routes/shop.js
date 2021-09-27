@@ -22,6 +22,8 @@ router.get('/orders',auth,shopController.getOrders)
 
 router.post('/create-order',auth,shopController.postOrder)
 
+// router.get('/view',shopController.getView)
+
 module.exports = router;
 
 

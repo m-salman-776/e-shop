@@ -1,5 +1,4 @@
 const Product = require('../models/product');
-// const Cart = require('../models/cart');
 const Order = require('../models/order');
 const product = require('../models/product');
 const order = require('../models/order');
@@ -26,7 +25,7 @@ exports.getProducts = async (req, res, next) => {
         printFirst:page !== 1 && page !==2,
         hasNext : page_limit*page < count,
         hasPrev : page > 1,
-        printLast : Math.ceil(count/page_limit) !== page+1 && Math.ceil(count/page_limit) !== page
+        printLast : Math.ceil(count/page_limit) !== page+1 && Math.ceil(count/page_limit) !== page,
       })
     }
     catch(e){
@@ -34,13 +33,17 @@ exports.getProducts = async (req, res, next) => {
     }
 };
 exports.getProduct = async (req,res)=>{
+  // console.log('called')
   const id = req.params.productId;
   try{
     const product = await Product.findById(id)
-    res.render('shop/product-details',{
+    // res.render('shop/product-details',{
+      res.render('shop/view-details',{
       product,
       pageTitle:'Product Details',
-      isLoggedIn:req.session.isLoggedIn
+      isLoggedIn:req.session.isLoggedIn,
+      product_details : true,
+      shop : true
     })
   }catch(e){
     console.log(e)
@@ -60,7 +63,7 @@ exports.getCart = async (req,res) =>{
       cartData,
       cart:true,
       empty:cartData.length <= 0,
-      isLoggedIn:req.session.isLoggedIn
+      isLoggedIn:req.session.isLoggedIn,
     })
   }catch(e){
     console.log(e)
@@ -82,8 +85,9 @@ exports.getOrders = async (req,res) =>{
     res.render('shop/orders',{
       pageTitle:'Your Order',
       orders,
+      order:true,
       empty:orders.length <= 0,
-      isLoggedIn:req.session.isLoggedIn
+      isLoggedIn:req.session.isLoggedIn,
     })
   }catch(e){
     console.log('Error from Orders',e)
@@ -127,7 +131,7 @@ exports.getIndex = async (req,res) =>{
       printFirst:page !== 1 && page !==2,
       hasNext : page_limit*page < count,
       hasPrev : page > 1,
-      printLast : Math.ceil(count/page_limit) !== page+1 && Math.ceil(count/page_limit) !== page
+      printLast : Math.ceil(count/page_limit) !== page+1 && Math.ceil(count/page_limit) !== page,
     })
   }
   catch(e){
@@ -147,3 +151,7 @@ exports.postCartDeleteItem = (req,res) =>{
     console.log(e)
   })
 }
+
+// exports.getView = async(req,res,next)=>{
+//   res.render('shop/view-details');
+// }

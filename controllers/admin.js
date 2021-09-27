@@ -6,7 +6,7 @@ exports.getAddProduct = (req, res, next) => {
     pageTitle: 'Add Product',
     path: '/admin/add-product',
     addProduct:true,
-    isLoggedIn:req.session.isLoggedIn
+    isLoggedIn:req.session.isLoggedIn,
   });
 }; 
 
@@ -30,7 +30,8 @@ exports.postAddProduct = async (req, res, next) => {
 }; 
 exports.getProducts = async (req,res) =>{
   try{
-    const products = await Product.find().populate('userId')
+    // const products = await Product.find({userId : req.user._id.toString()}).populate('userId')
+    const products = await Product.find({userId : req.user._id.toString()})
     res.render('admin/products',{
       products,
       pageTitle:'Admin Product',
@@ -84,7 +85,7 @@ exports.postEditProduct = async (req,res,next) =>{
 exports.getdeleteProduct = async (req,res,next) =>{
   const id = req.params.productId;
   try{
-    await Product.findByIdAndDelete(id)
+    await Product.findByIdAndDelete(id)//user id can be included to add extra check to avoid other user product
     res.redirect('/admin/products')
   }catch(e){
     console.log('Error from Deleting Product',e);

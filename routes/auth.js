@@ -15,4 +15,7 @@ router.post('/reset',authController.postResetPassword)
 
 router.get('/reset/:token',authController.changepassword)
 router.post('/setpassword',authController.setPassword)
+
+router.get('/profile',authController.getProfile)
+router.post('/profile',authController.postUpdateProfile)
 module.exports = router

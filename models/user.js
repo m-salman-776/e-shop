@@ -1,23 +1,37 @@
 const mongoose = require('mongoose')
+const validator = require('validator')
+const bcrypt = require('bcrypt')
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
     name:{
         type:String,
         required:true,
-        default:'Salman'
+        trim:true
     },
     email:{
         type:String,
-        required:true
+        required:true,
+        trim:true,
+        validate(email){
+            if(!validator.isEmail(email)) throw new Error('Invalid email')
+        }
     },
     password:{
         type:String,
-        required:true
+        required:true,
+        trim:true,
+        minLength : 3
+    },
+    pp : {
+        type : String
     },
     resetPasswordToken:{
         token:String,
         expirationTime:Date
+    },
+    imageUrl :{
+        type : String,
     },
     cart:{
         items:[{
@@ -58,4 +72,25 @@ userSchema.methods.clearCart = function(){
     this.cart = {items : []}
     return this.save()
 }
-module.exports = mongoose.model('User',userSchema)
+
+userSchema.pre('save', async function (next){
+    if(this.isModified('password')){
+        this.password = await bcrypt.hash(this.password,8)
+    }
+    next()
+})
+userSchema.statics.findUser = async (email,password,req) =>{
+    const user = await User.findOne({email})
+    if(!user) {
+      req.flash('error','Invalid email or password')
+      return 
+    }
+    const match = await bcrypt.compare(password,user.password)
+    if(!match) {
+        req.flash('error','Invalid email or password')
+      return 
+    }
+    return user
+}
+const User = mongoose.model('User',userSchema)
+module.exports = User
