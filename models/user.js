@@ -63,7 +63,7 @@ userSchema.methods.deleteFromCart = function(product){
     let updatedCartItem = [...this.cart.items]
     if(updatedCartItem[index].quantity > 1)
     updatedCartItem[index].quantity -= 1;
-    else updatedCartItem.filter(prod=>prod._id.toString() !== product._id.toString())
+    else updatedCartItem=updatedCartItem.filter(prod=>prod.productId.toString() !== product._id.toString())
     this.cart = {items:updatedCartItem}
     return this.save()
 }

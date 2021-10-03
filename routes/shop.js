@@ -1,5 +1,3 @@
-const path = require('path');
-
 const express = require('express');
 const auth = require('../middleware/auth')
 const shopController = require('../controllers/shop');

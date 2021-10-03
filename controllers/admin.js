@@ -44,10 +44,10 @@ exports.getProducts = async (req,res) =>{
 }
 
 exports.getEditProduct = async (req, res, next) => {
-  const mode = req.query.edit;
-  if(!mode) {
-    return redirect('/')
-  }
+  // const mode = req.query.edit;
+  // if(!mode) {
+  //   return redirect('/')
+  // }
   const productId = req.params.productId;
   try{
     const product = await Product.findById(productId)

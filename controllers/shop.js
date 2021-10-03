@@ -50,6 +50,8 @@ exports.getProduct = async (req,res)=>{
   }
 }
 exports.getCart = async (req,res) =>{
+  const error = req.flash('error')
+  const errorMessage = error.length > 0 ? error[0] : null;
   try{
     const user_data = await req.user.populate('cart.items.productId').execPopulate()
     let cartData = []
@@ -64,6 +66,7 @@ exports.getCart = async (req,res) =>{
       cart:true,
       empty:cartData.length <= 0,
       isLoggedIn:req.session.isLoggedIn,
+      errorMessage
     })
   }catch(e){
     console.log(e)
@@ -71,6 +74,10 @@ exports.getCart = async (req,res) =>{
 }
 exports.postCart = async (req,res)=>{
   const productId = req.body.productId;
+  if(!req.session.user) {
+    // req.session.redirectTo = {url : '/cart' , productId}
+    return res.redirect('/login')
+  }
   try{
     const product = await Product.findById(productId)
     await req.user.addToCart(product)
@@ -100,8 +107,15 @@ exports.postOrder = async (req,res) =>{
     const products = user_data.cart.items.map(i=>{
       return {quantity:i.quantity,product:{...i.productId._doc}}
     })
-    if(products.length == 0) return res.redirect('/cart')
+    if(products.length == 0) {
+      req.flash('error','cart is Empty redirecting to Cart')
+      return res.redirect('/cart')
+    }
     const order = new Order({user,products})
+    // if(order.length == 0){
+    //   res.redirect('/cart')
+    //   return ;
+    // }
     await order.save()
     req.user.clearCart()
     res.redirect('/orders')
@@ -140,26 +154,19 @@ exports.getIndex = async (req,res) =>{
 }
  
 exports.postCartDeleteItem = async(req,res) =>{
+  console.log('ee')
   const id = req.body.productId
   try{
     const product = await Product.findById(id);
     if(!product){
       console.log('Issue in deletion')
       return
-    }
+    } 
     await req.user.deleteFromCart(product)
+    // console.log('pp')
+    // console.log(id,product);
     res.redirect('/cart');
   }catch(e){
     console.log(e);
   }
 }
-//   Product.findById(id)
-//   .then(product=>{
-//     req.user.deleteFromCart(product)
-//     .then(()=>{
-//       res.redirect('/cart')
-//     })
-//   }).catch(e=>{
-//     console.log(e)
-//   })
-// }

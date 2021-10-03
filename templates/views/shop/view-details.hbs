@@ -92,12 +92,12 @@
 		</div> <!-- col.// --> --}}
 	</div> <!-- row.// -->
 	<hr>
-	{{#if isLoggedIn}}
+	{{!-- {{#if isLoggedIn}} --}}
         <form action="/cart" method="POST" style="width: max-content;">
         <input type="hidden" name="productId",id = "productId" value="{{product.id}}">
         <button class="btn btn-lg btn-primary">Add to Cart</button>
         </form>
-    {{/if}}
+    {{!-- {{/if}} --}}
 	{{!-- <a href="#" class="btn btn-lg btn-primary text-uppercase"> Buy now </a>
 	<a href="#" class="btn btn-lg btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i> Add to cart </a> --}}
 </article> <!-- card-body.// -->

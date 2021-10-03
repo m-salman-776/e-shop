@@ -8,7 +8,7 @@ exports.getLogin = (req, res, next) => {
     message = message[0]
   }
   else message = null
-    res.render('auth/login', {
+    res.render('auth/login',{
       pageTitle: 'Login',
       isLoggedIn:req.session.isLoggedIn,
       errorMessage:message
@@ -23,9 +23,12 @@ exports.postLogin = async (req, res, next) => {
     const user = await User.findUser(email,password,req)
     if(!user) return res.redirect('/login')
     req.session.user = user
-    req.session.isLoggedIn=true
+    req.session.isLoggedIn=true 
     await req.session.save()
     // sendLoginMail(email,user.name)
+    if(req.session.redirectTo){
+      
+    }
     res.redirect('/products')
   }
   catch(e){
@@ -51,6 +54,7 @@ exports.getSignUp = (req,res,next)=>{
 }
 
 exports.postSigUp = async (req,res,next)=>{
+  // console.log('we')
   const email = req.body.email
   const name = req.body.name || 'salman'
   const password = req.body.password
@@ -72,6 +76,7 @@ exports.postSigUp = async (req,res,next)=>{
     res.redirect('/login')
   }
   catch(e){
+    console.log(e);
     res.redirect('/signup')
   }
 }

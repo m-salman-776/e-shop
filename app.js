@@ -13,8 +13,9 @@ const errorController = require('./controllers/error');
 const User = require('./models/user');
 const flash= require('connect-flash')
 const multer = require('multer')
+const DB_Connection = process.env.env == 'dev' ? process.env.LOCAL_DATABASE : process.env.DATABASE
 const store = new MongoDBStore({
-    uri:process.env.DATABASE,
+    uri:DB_Connection,
     collection:'sessions'
 })
 const viewPath = path.join(__dirname,'templates','views')
@@ -22,7 +23,10 @@ const partialPath = path.join(__dirname,'templates','partials')
 const publicDir = path.join(__dirname,'public')
 
 const app = express();
-app.use(session({secret:'some secret',resave:false,saveUninitialized:false,store}))
+app.use(session({secret:process.env.SECRET,
+resave:false,
+saveUninitialized:false,
+store}))
 app.use((req,res,next)=>{
     if(!req.session.user) return next()
     User.findById(req.session.user._id)
@@ -59,8 +63,7 @@ app.use(shopRoutes);
 app.use(authRoutes)
 app.use(errorController.get404);
 const port = process.env.PORT || 3000
-
-mongoose.connect(process.env.DATABASE,{
+mongoose.connect(DB_Connection,{
     useNewUrlParser:true,
     useCreateIndex : true,
     useUnifiedTopology:true
